@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="./styles/reset.css">
+    <link rel="stylesheet" href="./styles/styles.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <div id="modalexample" class="modal">
+            <div class="modal__overlay"></div>
+            <div class="modal__content">
+                <div class="modal__header">
+                    <p class="modal__text">Rules</p>
+                    <img id="close" class="modal__closeIcon" src="./images/icon-close.svg" alt="close icon">
+                </div>
+                <img  style="width:300px;" class="modal__image" src="./images/image-rules.svg" alt="rules image">
+            </div>
+        </div>
+        <div class="container__content">
+            <header class="header">
+                <p class="header__logo">
+                    <span>Rock</span>
+                    <span>
+                        Paper
+                    </span>
+                    <span>
+                        Scissors
+                    </span>
+                </p>
+                <div class="header__scoreContent">
+                    <p class="header__scoreText">score</p>
+                    <p id="numtag" class="header__scoreNumber">0</p>
+                </div>
+            </header>
+            <div id="game" class="gameContent">
+
+                <div class="gameContent__bg"></div>
+
+                <div id="picked" class="gameContent__text gameContent__text--isYou">You Picked</div>
+                <div id="house" class="gameContent__text gameContent__text--isComputer">The house picked</div>
+
+
+                <div id="Paper" class="selectevent gameContent__gameChoice gameContent__gameChoice--isPaper" data-choice="Paper">
+                    <div class="gameContent__image">
+                        <img style="width: 60px;" src="./images/icon-paper.svg" alt="paper choice">
+                    </div>
+                </div>
+                <div id="Scissors" class="selectevent gameContent__gameChoice gameContent__gameChoice--isScissors" data-choice="Scissors">
+                    <div class="gameContent__image">
+                        <img style="width: 60px;" src="./images/icon-scissors.svg" alt="scissors choice">
+                    </div>
+                </div>
+                <div id="Rock" class="selectevent gameContent__gameChoice gameContent__gameChoice--isRock" data-choice="Rock">
+                    <div class="gameContent__image">
+                        <img style="width: 60px;" src="./images/icon-rock.svg" alt="rock choice">
+                    </div>
+                </div>
+                <div id="computer" class="gameContent__gameChoice gameContent__gameChoice--isComputer">
+                    <div class="gameContent__image">
+                        <span class="gameContent__countdownText"></span>
+                        <img style="width: 60px;" src="" class="gameContent__gameChoiceImage" alt="computer choice" />
+                    </div>
+                </div>
+            </div>
+            <div class="gameContent__result opacity-0">
+                <lottie-player src='https://assets10.lottiefiles.com/packages/lf20_aEFaHc.json'
+                               background="transparent"
+                               speed="1"
+                               style="width: 300px; height: 300px;position: absolute;"
+                               autoplay></lottie-player>
+                <span class="resulttext gameContent__resultText">You Win</span>
+                <button id="again" class="gameContent__resultButton">Play again</button>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between w-100">
+            <div id="otherexample" class="container__rules ms-0">
+                Other Example
+            </div>
+            <div id="roledclick" class="container__rules ">
+                Rules
+            </div>
+        </div>
+        
+    </div>
+
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+   
+    <script>
+        
+        var num = 0;
+        var choiceuser = '';
+        var choicecomputer = '';
+        var result = '';
+        var rockbtn = document.getElementById('rockbtn');
+        var row = document.getElementById('row');
+        var again = document.getElementById('again');
+        var Paper = document.getElementById('Paper');
+        var numtag = document.getElementById('numtag');
+        var Scissors = document.getElementById('Scissors');
+        var Rock = document.getElementById('Rock');
+        var computer = document.getElementById('computer');
+        var game = document.getElementById('game');
+        var modal = document.getElementById('modalexample');
+        var closebtn = document.getElementById('close');
+        var array = document.querySelectorAll('.selectevent');
+        var resulttext = document.querySelector('.resulttext');
+        again.addEventListener('click', againfunction);
+        document.getElementById('otherexample').addEventListener('click', exampletwo);
+        var header = document.querySelector('.header__logo');
+        for (var x of array) {
+            x.addEventListener('click', select);
+        }
+        function select(event) {
+            var x = event.target;
+            game.classList.add('gameContent--isActive')
+            x.classList.add('gameContent__gameChoice--isActive');
+
+            document.getElementById('picked').classList.remove('gameContent__text');
+            document.getElementById('house').classList.remove('gameContent__text');
+            choiceuser = x.getAttribute('data-choice');
+            functionresult(choiceuser);
+            document.querySelector('.gameContent__countdownText').textContent = '';
+            computer.classList.add(`gameContent__gameChoice--is${choicecomputer}`);
+            if (header.firstElementChild.textContent == 'Rock') {
+                computer.firstElementChild.firstElementChild.nextElementSibling.setAttribute('src', `images/icon-${choicecomputer.toLowerCase()}.svg`);
+            }
+            else {
+                computer.firstElementChild.firstElementChild.nextElementSibling.setAttribute('src', `images/${choicecomputer.toLowerCase()}.png`);
+
+            }
+            game.classList.add('gameContent--isActive');
+            document.querySelector('.gameContent__result').classList.add('opacity-100');
+            numtag.textContent = num;
+            resulttext.textContent = result;   
+        }
+        function random() {
+            choicecomputer = Math.floor(Math.random() * 3);
+            if (header.firstElementChild.textContent == 'Rock') {
+                if (choicecomputer == 0) {
+
+                    choicecomputer = 'Paper';
+                }
+                else if (choicecomputer == 1) {
+                    choicecomputer = 'Scissors';
+                }
+                else if (choicecomputer == 2) {
+                    choicecomputer = 'Rock';
+                }
+            }
+            else {
+                if (choicecomputer == 0) {
+
+                    choicecomputer = 'fire';
+                }
+                else if (choicecomputer == 1) {
+                    choicecomputer = 'water';
+                }
+                else if (choicecomputer == 2) {
+                    choicecomputer = 'wood';
+                }
+
+            }
+            
+        };
+        function functionresult(choiceuser) {
+            if (header.firstElementChild.textContent == 'Rock') {
+                if (choiceuser == 'Paper') {
+                    random();
+
+                    if (choicecomputer == 'Paper') {
+                        result = 'Draw';
+
+                    }
+                    else if (choicecomputer == 'Scissors') {
+                        result = 'loss';
+
+
+                    }
+                    else if (choicecomputer == 'Rock') {
+                        result = 'win';
+                        num = num + 1;
+
+                    }
+                }
+                else if (choiceuser == 'Scissors') {
+                    random();
+                    if (choicecomputer == 'Rock') {
+                        result = 'loss';
+
+                    }
+                    else if (choicecomputer == 'Scissors') {
+                        result = 'Drow';
+
+                    }
+                    else if (choicecomputer == 'Paper') {
+                         result = 'win';
+                        num = num + 1;
+                       
+                    }
+                }
+                else if (choiceuser == 'Rock') {
+                    random();
+                    if (choicecomputer == 'Scissors') {
+                        result = 'win';
+                        num = num + 1;
+                        
+
+                    }
+                    else if (choicecomputer == 'Paper') {
+                        result = 'loss';
+                        
+
+                    }
+                    else if (choicecomputer == 'Rock') {
+                        result = 'Draw';
+
+                    }
+                }
+            }
+            else {
+                if (choiceuser == 'Paper') {
+                    random();
+
+                    if (choicecomputer == 'fire') {
+                        result = 'Draw';
+
+                    }
+                    else if (choicecomputer == 'water') {
+                        result = 'loss';
+
+                    }
+                    else if (choicecomputer == 'wood') {
+                         result = 'win';
+                        num = num + 1;
+
+                    }
+                }
+                else if (choiceuser == 'Scissors') {
+                    random();
+                    if (choicecomputer == 'wood') {
+                        
+                        result = 'loss';
+                    }
+                    else if (choicecomputer == 'water') {
+                        result = 'Drow';
+
+                    }
+                    else if (choicecomputer == 'fire') {
+                        result = 'win';
+                        num = num + 1;
+                        
+                    }
+                }
+                else if (choiceuser == 'Rock') {
+                    random();
+                    if (choicecomputer == 'water') {
+                        result = 'win';
+                        num = num + 1;
+
+
+                    }
+                    else if (choicecomputer == 'fire') {
+
+                        result = 'loss';
+
+                    }
+                    else if (choicecomputer == 'wood') {
+                        result = 'Draw';
+
+                    }
+                }
+            }
+            
+        
+        }
+        function againfunction() {
+            var activeChoiceElement = document.querySelector('.gameContent__gameChoice--isActive');
+            document.querySelector('.gameContent__result').classList.remove('opacity-100');
+            document.getElementById('picked').classList.add('gameContent__text');
+            document.getElementById('house').classList.add('gameContent__text');
+            game.classList.remove(`gameContent--revealResult`);
+            computer.classList.remove(`gameContent__gameChoice--is${choicecomputer}`);
+            document.querySelector('.gameContent__gameChoiceImage').setAttribute('src', '');
+            game.classList.remove('gameContent--isActive', 'gameContent--isLost');
+            activeChoiceElement.classList.remove('gameContent__gameChoice--isActive');
+        }
+        document.getElementById('roledclick').addEventListener('click', function () {
+            if (header.firstElementChild.textContent == 'Rock') {
+                if (modal.innerHTML.includes('water-fire-wood.png', 0)) {
+                    modal.innerHTML = modal.innerHTML.replace('water-fire-wood.png', 'image-rules.svg');
+                }
+                
+
+            }
+            else {
+                modal.innerHTML = modal.innerHTML.replace('image-rules.svg', 'water-fire-wood.png');
+            }
+      
+            modal.classList.toggle('modal--isActive');
+
+        });
+        
+        function exampletwo() {
+            if (header.firstElementChild.textContent == 'Rock') {
+                Paper.innerHTML = Paper.innerHTML.replace('icon-paper.svg', 'fire.png');
+                Rock.innerHTML = Rock.innerHTML.replace('icon-rock.svg', 'wood.png');
+                Scissors.innerHTML = Scissors.innerHTML.replace('icon-scissors.svg', 'water.png');
+
+
+
+
+                header.firstElementChild.textContent = 'Water';
+                header.firstElementChild.nextElementSibling.textContent = 'Fire';
+                header.firstElementChild.nextElementSibling.nextElementSibling.textContent = 'Food';
+
+            }
+            else {
+                Paper.innerHTML = Paper.innerHTML.replace('fire.png', 'icon-paper.svg');
+                Rock.innerHTML = Rock.innerHTML.replace('wood.png', 'icon-rock.svg');
+                Scissors.innerHTML = Scissors.innerHTML.replace('water.png', 'icon-scissors.svg');
+
+                header.firstElementChild.textContent = 'Rock';
+                header.firstElementChild.nextElementSibling.textContent = 'Paper';
+                header.firstElementChild.nextElementSibling.nextElementSibling.textContent = 'Scissors';
+            }
+            
+
+
+        }
+        closebtn.addEventListener('click', closebtnfun);
+        function closebtnfun() {
+
+            modal.classList.toggle('modal--isActive');
+
+};
+    </script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
