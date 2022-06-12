@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="DataTables/datatables.min.css">
+    <script src="js/Database.js"></script>
+    <link href="Project.css" rel="stylesheet" />
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <title>login in </title>
+    <style>
+        body {
+            background-color: white;
+            background-image: none;
+            position: relative;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .section-01 {
+            position: absolute;
+            height: 600px;
+            width: auto;
+            border-radius: 50%;
+            top: 50%;
+            right: 50%;
+            transform: translate(50%, -50%);
+            /*   background: rgb(255, 164, 164);
+            /*  background: linear-gradient(90deg, rgba(255, 164, 164, 0.9951330874146533) 0%, rgba(93, 208, 116, 1) 53%, rgba(0, 30, 247, 1) 100%);
+        */
+        }
+
+        .login {
+            height: 100vh;
+            width: 100%;
+        }
+
+        .form {
+            z-index: 1000000;
+            background-color: rgb(255, 255, 255);
+            border-radius: 10px;
+            height: 500px;
+            width: 400px;
+            box-shadow: 5px 5px 16px rgb(0 0 0 /30%), -5px -5px 16px rgb(0 0 0 /30%) !important;
+        }
+
+            .form .form-floating {
+                width: 100% !important;
+            }
+
+        video {
+            object-fit: cover;
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        form {
+            z-index: 0 !important;
+        }
+        
+    </style>
+</head>
+
+<body>
+   
+    <section class="section-01"></section>
+
+    <section id="section" class=" login d-flex justify-content-center align-items-center">
+        <form id="form" class="form d-flex flex-column justify-content-center  gap-5">
+            <h1 class="text-center h3 pt-5">Play Game</h1>
+            <div class="form-floating  d-flex justify-content-center px-4 ">
+                <input pattern="[a-zA-Z]+([\.-]?[a-zA-Z]+)*"  type="text" required name="user" class="form-control   " placeholder="Username">
+                <label class="px-5">Username</label>
+            </div>
+            
+            <div class="px-5 row d-flex  w-100">
+                <input name="btnLogin" type="submit" class="form-control btn btn-dark d-inline-b w-50 p-2 mx-auto" value="Login">
+            </div>
+           
+        </form>
+    </section>
+
+
+
+   
+
+
+
+
+
+    <script>
+       
+     
+
+        
+
+        
+        var form = document.getElementById('form');
+        var section = document.getElementById('section');
+        
+     
+        form.addEventListener('submit', login);
+        function login() {
+
+            section.classList.add('d-none');
+
+        }
+
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src=" js/bootstrap.bundle.min.js "></script>
+</body>
+
+</html>
+
+
