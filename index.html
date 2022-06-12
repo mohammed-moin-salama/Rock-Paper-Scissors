@@ -7,11 +7,67 @@
     <title>Rock Paper Scissors</title>
     <link rel="stylesheet" href="./styles/reset.css">
     <link rel="stylesheet" href="./styles/styles.css">
+    <style>
+        body {
+            /*background: -webkit-gradient(linear, left top, left bottom, from(#1f3756), to(#141539));
+            background: linear-gradient(#1f3756, #141539);*/
+        }
+        body {
+            background-color: white;
+            background-image: none;
+            position: relative;
+            height: 100vh;
+            width: 100%;
+        }
 
+      
+        .login {
+            height: 100vh;
+            width: 100%;
+        }
+
+        .form {
+            z-index: 1000000;
+            background-color: rgb(255, 255, 255);
+            border-radius: 10px;
+            height: 500px;
+            width: 400px;
+            box-shadow: 5px 5px 16px rgb(0 0 0 /30%), -5px -5px 16px rgb(0 0 0 /30%) !important;
+        }
+
+            .form .form-floating {
+                width: 100% !important;
+            }
+
+        video {
+            object-fit: cover;
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container">
+    <section id="section" class=" login d-flex justify-content-center align-items-center">
+        <form id="form" class="form d-flex flex-column justify-content-center  gap-5">
+            <h1 class="text-center h3 pt-5">Play Game</h1>
+            <div class="form-floating  d-flex justify-content-center px-4 ">
+                <input pattern="[a-zA-Z]+([\.-]?[a-zA-Z]+)*" type="text" required name="user" class="form-control   " placeholder="Username">
+                <label class="px-5">Username</label>
+            </div>
+
+            <div class="px-5 row d-flex  w-100">
+                <input name="btnLogin" type="submit" class="form-control btn btn-dark d-inline-b w-50 p-2 mx-auto" value="Login">
+            </div>
+
+        </form>
+    </section>
+
+
+    <div class="container d-none" id="container">
         <div id="modalexample" class="modal">
             <div class="modal__overlay"></div>
             <div class="modal__content">
@@ -19,7 +75,7 @@
                     <p class="modal__text">Rules</p>
                     <img id="close" class="modal__closeIcon" src="./images/icon-close.svg" alt="close icon">
                 </div>
-                <img  style="width:300px;" class="modal__image" src="./images/image-rules.svg" alt="rules image">
+                <img style="width:300px;" class="modal__image" src="./images/image-rules.svg" alt="rules image">
             </div>
         </div>
         <div class="container__content">
@@ -79,20 +135,54 @@
             </div>
         </div>
         <div class="d-flex justify-content-between w-100">
-            <div id="otherexample" class="container__rules ms-0">
+
+            <div id="roleexit" class="container__rules ">
+                Exit
+            </div>
+            <div id="otherexample" class="container__rules mx-auto">
                 Other Example
             </div>
-            <div id="roledclick" class="container__rules ">
+            <div id="roledclick" class="container__rules ms-0 ">
                 Rules
             </div>
         </div>
-        
+
     </div>
 
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-   
     <script>
-        
+        var form = document.getElementById('form');
+        var section = document.getElementById('section');
+        var container = document.getElementById('container');
+
+
+        form.addEventListener('submit', login);
+        function login(event) {
+
+            section.classList.add('d-none');
+            container.classList.remove('d-none');
+            document.getElementById('picked').textContent = '';
+            document.getElementById('picked').textContent += form.elements.user.value;
+            document.getElementById('picked').textContent +='  Picked';
+
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
+
+    </script>
+    <script>
+
+
+
+
+
+
+
+
+
+
+
         var num = 0;
         var choiceuser = '';
         var choicecomputer = '';
@@ -106,6 +196,7 @@
         var Rock = document.getElementById('Rock');
         var computer = document.getElementById('computer');
         var game = document.getElementById('game');
+        var roleexit = document.getElementById('roleexit');
         var modal = document.getElementById('modalexample');
         var closebtn = document.getElementById('close');
         var array = document.querySelectorAll('.selectevent');
@@ -137,7 +228,9 @@
             game.classList.add('gameContent--isActive');
             document.querySelector('.gameContent__result').classList.add('opacity-100');
             numtag.textContent = num;
-            resulttext.textContent = result;   
+            resulttext.textContent = result;
+            document.getElementById('otherexample').classList.toggle('d-none');
+           
         }
         function random() {
             choicecomputer = Math.floor(Math.random() * 3);
@@ -166,7 +259,7 @@
                 }
 
             }
-            
+
         };
         function functionresult(choiceuser) {
             if (header.firstElementChild.textContent == 'Rock') {
@@ -199,9 +292,9 @@
 
                     }
                     else if (choicecomputer == 'Paper') {
-                         result = 'win';
+                        result = 'win';
                         num = num + 1;
-                       
+
                     }
                 }
                 else if (choiceuser == 'Rock') {
@@ -209,12 +302,12 @@
                     if (choicecomputer == 'Scissors') {
                         result = 'win';
                         num = num + 1;
-                        
+
 
                     }
                     else if (choicecomputer == 'Paper') {
                         result = 'loss';
-                        
+
 
                     }
                     else if (choicecomputer == 'Rock') {
@@ -236,7 +329,7 @@
 
                     }
                     else if (choicecomputer == 'wood') {
-                         result = 'win';
+                        result = 'win';
                         num = num + 1;
 
                     }
@@ -244,7 +337,7 @@
                 else if (choiceuser == 'Scissors') {
                     random();
                     if (choicecomputer == 'wood') {
-                        
+
                         result = 'loss';
                     }
                     else if (choicecomputer == 'water') {
@@ -254,7 +347,7 @@
                     else if (choicecomputer == 'fire') {
                         result = 'win';
                         num = num + 1;
-                        
+
                     }
                 }
                 else if (choiceuser == 'Rock') {
@@ -276,10 +369,12 @@
                     }
                 }
             }
-            
-        
+
+
         }
         function againfunction() {
+            document.getElementById('otherexample').classList.toggle('d-none');
+
             var activeChoiceElement = document.querySelector('.gameContent__gameChoice--isActive');
             document.querySelector('.gameContent__result').classList.remove('opacity-100');
             document.getElementById('picked').classList.add('gameContent__text');
@@ -295,17 +390,17 @@
                 if (modal.innerHTML.includes('water-fire-wood.png', 0)) {
                     modal.innerHTML = modal.innerHTML.replace('water-fire-wood.png', 'image-rules.svg');
                 }
-                
+
 
             }
             else {
                 modal.innerHTML = modal.innerHTML.replace('image-rules.svg', 'water-fire-wood.png');
             }
-      
+
             modal.classList.toggle('modal--isActive');
 
         });
-        
+
         function exampletwo() {
             if (header.firstElementChild.textContent == 'Rock') {
                 Paper.innerHTML = Paper.innerHTML.replace('icon-paper.svg', 'fire.png');
@@ -329,7 +424,7 @@
                 header.firstElementChild.nextElementSibling.textContent = 'Paper';
                 header.firstElementChild.nextElementSibling.nextElementSibling.textContent = 'Scissors';
             }
-            
+
 
 
         }
@@ -338,10 +433,27 @@
 
             modal.classList.toggle('modal--isActive');
 
-};
+        };
+
+        roleexit.addEventListener('click', function () {
+
+            section.classList.remove('d-none');
+            container.classList.add('d-none');
+           
+
+            event.preventDefault();
+            event.stopPropagation();
+
+        });
+
+
+
     </script>
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+
+
 
 
